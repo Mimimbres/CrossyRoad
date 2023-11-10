@@ -5,7 +5,7 @@ class Player {
    this.y = 580; // Adjusted initial position
    this.onLog = false; // Add a flag to check if the player is on a log
   }
- 
+
   move(xDir, yDir) {
    // Check boundaries before updating position
    if (this.x + xDir * 20 > 0 && this.x + xDir * 20 < width) {
@@ -15,10 +15,10 @@ class Player {
      this.y += yDir * 20;
    }
   }
- 
+
   update() {
    // Update player logic here
- 
+
    let isOnLog = false;
    for (let log of logs) {
      if (log.playerOnLog(this)) {
@@ -27,13 +27,14 @@ class Player {
      }
    }
    this.onLog = isOnLog;
- 
+
    // Check if the player is in the water and not on a log
    if (this.isInWater() && !this.onLog) {
-     resetGame();
+    displayGameOverModal();
+      resetGame();
    }
   }
- 
+
   // Method to check if the player is in a water lane
   isInWater() {
    for (let lane of lanes) {
@@ -43,7 +44,7 @@ class Player {
    }
    return false;
   }
- 
+
   display() {
    fill(255);
    stroke(0); // Black outline
@@ -52,4 +53,3 @@ class Player {
    rect(this.x, this.y, this.size, this.size);
   }
  }
- 
