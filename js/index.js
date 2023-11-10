@@ -17,11 +17,11 @@ function setup() {
     } else if (i >= 1 && i <= 5) {
       lanes.push(new Water(i * 40)); // Water lanes in 2nd, 3rd, 4th, and 5th lanes
       // Create logs in the water lanes
-      for (let j = 0; j < 4; j++) {
-        let logX = random(width);
-        let logSpeed = random(1, 3);
-        logs.push(new Log(logX, i * 40, logSpeed));
-      }
+       for (let j = 0; j < 4; j++) {
+         let logX = random(width);
+         let logSpeed = random(1, 3);
+         logs.push(new Log(logX, i * 40, logSpeed));
+         }
     } else {
       lanes.push(new Lane(i * 40, false)); // Gray lanes
     }
@@ -115,6 +115,12 @@ function displayGameOverModal() {
   modal.style('display', 'flex');
 }
 
+function resetGame() {
+  // Reset player position
+  player.x = width / 2;
+  player.y = 580;
+  player.onLog = false;
+}
 function restartGame() {
   // Remove the modal from the DOM
   select('.modal').remove();
@@ -125,7 +131,22 @@ function restartGame() {
   obstacles = [];
   cars = [];
   logs = [];
-
+  
+  for (let i = 0; i < 15; i++) {
+    if (i === 0 || i === 10 || i === 14) {
+      lanes.push(new Lane(i * 40, true)); // Green lanes
+    } else if (i >= 1 && i <= 5) {
+      lanes.push(new Water(i * 40)); // Water lanes in 2nd, 3rd, 4th, and 5th lanes
+      // Create logs in the water lanes
+      for (let j = 0; j < 4; j++) {
+        let logX = random(width);
+        let logSpeed = random(1, 3);
+        logs.push(new Log(logX, i * 40, logSpeed));
+      }
+    } else {
+      lanes.push(new Lane(i * 40, false)); // Gray lanes
+    }
+  }
   // Create initial obstacles
   obstacles.push(new Obstacle(1));
   obstacles.push(new Obstacle(2));
