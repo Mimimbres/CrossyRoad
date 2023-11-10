@@ -21,16 +21,20 @@ class Player {
   update() {
     // Update player logic here
 
-    // Check for collisions with logs
     for (let log of logs) {
       if (log.playerOnLog(this)) {
-        this.x += log.speed; // Update player's position based on the log's speed
         this.x = constrain(this.x, this.size / 2, width - this.size / 2); // Keep player within canvas bounds
         this.onLog = true;
-        break; // Exit the loop if the player is on a log
+
       } else {
         this.onLog = false;
       }
+    }
+  
+    // Check if the player goes below the canvas
+    if (!this.onLog && this.y - this.size / 2 > height) {
+      gameOver = true;
+      displayGameOverModal();
     }
   }
 

@@ -3,7 +3,7 @@
 class Log {
     constructor(x, laneY, speed) {
       this.x = x;
-      this.y = laneY + 18; // Adjusted position to start 15px below the lane
+      this.y = laneY + 20; // Adjusted position to start 15px below the lane
       this.width = 70;
       this.height = 35;
       this.speed = 2;
