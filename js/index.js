@@ -16,38 +16,37 @@ function setup() {
       lanes.push(new Lane(i * 40, true)); // Green lanes
     } else if (i >= 1 && i <= 5) {
       lanes.push(new Water(i * 40)); // Water lanes in 2nd, 3rd, 4th, and 5th lanes
-      // Create logs in the water lanes
-      // Create logs in the water lanes
       for (let j = 0; j < 4; j++) {
         let logX = random(width);
-        let logSpeed = 1; // Set the speed to 1
-        let direction = i % 2 === 0 ? 1 : -1; // Determine the direction based on whether the lane is even or odd
+        let logSpeed = 1;
+        let direction = i % 2 === 0 ? 1 : -1;
         logs.push(new Log(logX, i * 40, logSpeed, direction));
       }
-
-    }
-
-    // Create initial obstacles
-    obstacles.push(new Obstacle(1)); // Obstacle in the 2nd lane (from the bottom) moving left to right
-    obstacles.push(new Obstacle(2)); // Obstacle in the 3rd lane moving right to left
-    obstacles.push(new Obstacle(3)); // Obstacle in the 4th lane moving left to right
-
-    // Create initial cars
-    for (let i = 0; i < 5; i++) {
-      for (let j = 1; j <= 3; j++) {
-        cars.push(new Car(j));
-      }
-    }
-
-    // Add more cars in each lane
-    for (let i = 0; i < 10; i++) {
-      for (let j = 1; j <= 3; j++) {
-        cars.push(new Car(j, cars[0].isMovingRight));
-      }
+    } else {
+      lanes.push(new Lane(i * 40, false)); // Gray lanes
     }
   }
 
+  // Create initial obstacles
+  obstacles.push(new Obstacle(1)); // Obstacle in the 2nd lane (from the bottom) moving left to right
+  obstacles.push(new Obstacle(2)); // Obstacle in the 3rd lane moving right to left
+  obstacles.push(new Obstacle(3)); // Obstacle in the 4th lane moving left to right
+
+  // Create initial cars
+  for (let i = 0; i < 5; i++) {
+    for (let j = 1; j <= 3; j++) {
+      cars.push(new Car(j));
+    }
+  }
+
+  // Add more cars in each lane
+  for (let i = 0; i < 10; i++) {
+    for (let j = 1; j <= 3; j++) {
+      cars.push(new Car(j, cars[0].isMovingRight));
+    }
+  }
 }
+
 function draw() {
   background(255);
 
@@ -85,9 +84,13 @@ function draw() {
     }
   }
 
+  // Check if the player has reached the upper lane and level up
+  window.level.checkLevelCompletion(player);
 
   player.update();
   player.display();
+
+  window.level.displayLevel();
 }
 
 function keyPressed() {
@@ -134,21 +137,19 @@ function restartGame() {
   obstacles = [];
   cars = [];
   logs = [];
+  level.level = 1;
 
   for (let i = 0; i < 15; i++) {
     if (i === 0 || i === 10 || i === 14) {
       lanes.push(new Lane(i * 40, true)); // Green lanes
     } else if (i >= 1 && i <= 5) {
       lanes.push(new Water(i * 40)); // Water lanes in 2nd, 3rd, 4th, and 5th lanes
-      // Create logs in the water lanes
-      // Create logs in the water lanes
       for (let j = 0; j < 4; j++) {
         let logX = random(width);
-        let logSpeed = 1; // Set the speed to 1
-        let direction = i % 2 === 0 ? 1 : -1; // Determine the direction based on whether the lane is even or odd
-        logs.push(new Log(logX, i * 40, logSpeed, direction)); // Create new Log objects and push them into the logs array
+        let logSpeed = 1;
+        let direction = i % 2 === 0 ? 1 : -1;
+        logs.push(new Log(logX, i * 40, logSpeed, direction));
       }
-
     } else {
       lanes.push(new Lane(i * 40, false)); // Gray lanes
     }
@@ -161,7 +162,7 @@ function restartGame() {
 
   // Create initial cars
   for (let i = 0; i < 5; i++) {
-    let laneIndex = floor(random(1, 4)); // Randomly select a lane with cars
+    let laneIndex = floor(random(1, 4));
     cars.push(new Car(laneIndex));
   }
 }

@@ -9,9 +9,12 @@ class Log {
   }
  
   update() {
+    // this.speed *= window.level.getSpeedMultiplier();
+
     // Move the log
+
     this.x += this.speed * this.direction; // Multiply speed by direction
- 
+    
     // Reset position if it goes off the screen
     if (this.x > width || this.x < 0) {
       this.x = this.direction > 0 ? 0 : width; // Reset position based on direction

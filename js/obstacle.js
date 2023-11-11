@@ -7,9 +7,11 @@ class Obstacle {
       this.isMovingRight = laneIndex % 2 === 0;
       this.y = (14 - laneIndex) * 40 + 20;
       this.x = this.isMovingRight ? 0 - this.width / 2 : width + this.width / 2;
+      this.color = color(random(255), random(255), random(255));
     }
   
     update() {
+      
       this.x += this.isMovingRight ? this.speed : -this.speed;
   
       // Reset position if it goes off the screen
@@ -21,7 +23,7 @@ class Obstacle {
     }
   
     display() {
-      fill(255, 0, 0); // Red color for obstacles
+      fill(this.color); // Red color for obstacles
       noStroke();
       rectMode(CENTER);
       rect(this.x, this.y, this.width, this.height);

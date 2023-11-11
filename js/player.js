@@ -7,32 +7,35 @@ class Player {
   }
 
   move(xDir, yDir) {
-   // Check boundaries before updating position
-   if (this.x + xDir * 20 > 0 && this.x + xDir * 20 < width) {
-     this.x += xDir * 20;
-   }
-   if (this.y + yDir * 20 > 0 && this.y + yDir * 20 < height) {
-     this.y += yDir * 20;
-   }
+    // Check x boundaries before updating position
+    if (this.x + xDir * 20 > 0 && this.x + xDir * 20 < width) {
+      this.x += xDir * 20;
+    }
+  
+    // Check y boundaries before updating position
+    if (this.y + yDir * 20 > 0 && this.y + yDir * 20 < height) {
+      this.y += yDir * 20;
+    }
   }
 
   update() {
-   // Update player logic here
-
-   let isOnLog = false;
-   for (let log of logs) {
-     if (log.playerOnLog(this)) {
-       this.x = constrain(this.x, this.size / 2, width - this.size / 2); // Keep player within canvas bounds
-       isOnLog = true;
-     }
-   }
-   this.onLog = isOnLog;
-
-   // Check if the player is in the water and not on a log
-   if (this.isInWater() && !this.onLog) {
-    displayGameOverModal();
+    // Update player logic here
+  
+    let isOnLog = false;
+    for (let log of logs) {
+      if (log.playerOnLog(this)) {
+        this.x = constrain(this.x, this.size / 2, width - this.size / 2); // Keep player within canvas bounds
+        isOnLog = true;
+        console.log('Player is on a log');
+      }
+    }
+    this.onLog = isOnLog;
+  
+    // Check if the player is in the water and not on a log
+    if (this.isInWater() && !this.onLog) {
+      displayGameOverModal();
       resetGame();
-   }
+    }
   }
 
   // Method to check if the player is in a water lane
@@ -53,3 +56,11 @@ class Player {
    rect(this.x, this.y, this.size, this.size);
   }
  }
+ function checkLevelCompletion(player) {
+  // Check if the player has reached the upper lane
+  if (player.y <= 0) {
+    console.log('Player has reached the top');
+    level++;
+    speedMultiplier *= 1.5;
+  }
+}
