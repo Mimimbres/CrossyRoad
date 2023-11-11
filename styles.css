@@ -6,6 +6,9 @@ body {
   align-items: center;
   margin: 0;
   padding: 0;
+  background-image: url("/9550-Frogger-Retro-Arcade-Game-Front-web_2000x2000.jpg");
+  background-repeat: no-repeat;
+  background-position: -105px -450px;
 }
 
 .modal {
