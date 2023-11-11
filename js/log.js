@@ -1,25 +1,26 @@
-// log.js
-
 class Log {
-    constructor(x, laneY, speed) {
-      this.x = x;
-      this.y = laneY + 20; // Adjusted position to start 15px below the lane
-      this.width = 70;
-      this.height = 35;
-      this.speed = 2;
+  constructor(x, laneY, speed, direction) {
+    this.x = x;
+    this.y = laneY + 20; // Adjusted position to start 15px below the lane
+    this.width = 70;
+    this.height = 35;
+    this.speed = speed;
+    this.direction = direction; // Add this line
+  }
+ 
+  update() {
+    // Move the log
+    this.x += this.speed * this.direction; // Multiply speed by direction
+ 
+    // Reset position if it goes off the screen
+    if (this.x > width || this.x < 0) {
+      this.x = this.direction > 0 ? 0 : width; // Reset position based on direction
     }
-  
-    update() {
-      // Move the log
-      this.x += this.speed;
-  
-      // Reset position if it goes off the screen
-      if (this.speed > 0 && this.x > width) {
-        this.x = -this.width;
-      } else if (this.speed < 0 && this.x < -this.width) {
-        this.x = width;
-      }
-    }
+  }
+ 
+  // Rest of the class...
+ 
+ 
   
     display() {
       fill(139, 69, 19); // Brown color
